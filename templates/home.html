@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    <div class="banner"></div>
+       <header>
+         <h2 class="logo">AutiVision</h2>
+         <nav class="navigation">
+            <a href="/">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+
+          </nav>
+       </header>
+      <div class="content">
+                <h1>Enhancing Clinical Diagnosis with Advanced Technology</h1>
+                <p>Our platform is dedicated to supporting clinicians in the detection and diagnosis of autism spectrum disorder (ASD) through the integration of state-of-the-art deep learning technology. Designed with clinical usability in mind, our tool provides accurate predictions and actionable insights to aid in decision-making.</p>
+            <div>
+                <a href="{{ url_for('login') }}"><button class="button-login" >Login</button></a>
+                <a href="{{ url_for('register') }}"><button class="button-login">Register</button></a>
+            </div>
+
+        </div>
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+@import url("https://fonts.googleapis.com/css5?family=Poppins:wght@300;400;500;600:700;800;900&display=swap");
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', 'sans-serif';
+}
+
+
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 2em;
+    color: #0066cc;
+    user-select: none;
+    transition: color 0.3s ease; 
+}
+
+.logo:hover {
+    color: #004080; 
+}
+
+.navigation {
+    display: flex; /* Ensure navigation links are displayed in a row */
+}
+
+.navigation a {
+    position: relative;
+    font-size: 1.1em;
+    font-weight: 900;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: color 0.3s ease; 
+}
+
+.navigation a:hover {
+    color: #004080; 
+}
+
+.content .button-login {
+    width: 150px;
+    height: 50px;
+    background: #0066cc;
+    border: 2px solid #0066cc;
+    border-radius: 25px;
+    outline: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #ffffff;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: background 0.3s ease, color 0.3s ease; 
+}
+
+.content .button-login:hover {
+    background: #004080; 
+}
+
+.navigation a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: #0066cc;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .3s;
+}
+
+.navigation a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+
+
+
+.logo{
+    font-size: 2em;
+    color:rgb(0, 0, 0) ;
+    user-select: none;
+   
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('GettyImages.webp') no-repeat;
+    background-size: cover;
+    background-position: center;
+
+}
+
+    .wrapper {
+        user-select: none;
+        width: 80%;
+        max-width: 450px;
+        position: relative;
+        text-align: center;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 20px; /* Increased border-radius for a softer look */
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1); /* Elevated shadow effect */
+    }
+    
+    .wrapper h1 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 2.8em; /* Slightly increased font size for emphasis */
+        color: #333;
+    }
+    
+    .input-box input {
+        width: calc(100% - 30px); /* Adjusted width to account for padding */
+        height: 50px;
+        margin-bottom: 25px;
+        padding: 0 20px; /* Increased padding for better spacing */
+        background: #f5f5f5; /* Light gray background */
+        border: 2px solid #ddd; /* Lighter border color */
+        border-radius: 25px;
+        font-size: 16px;
+        color: #444; /* Slightly darker text color */
+        transition: border-color 0.3s ease; /* Added transition for smoother effect */
+    }
+    
+    .input-box input::placeholder {
+        color: #999; /* Subtle placeholder color */
+    }
+    
+    .input-box input:focus {
+        border-color: #0066cc; /* Changed border color on focus to match button color */
+    }
+    
+    .wrapper .btn {
+        width: 50%;
+        height: 50px;
+        background: #0066cc;
+        border: none;
+        outline: none;
+        border-radius: 25px;
+        box-shadow: 0 4px 10px rgba(0, 102, 204, 0.2); /* Enhanced button shadow */
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+        transition: background-color 0.3s ease; /* Added transition for smoother effect */
+    }
+    
+    .wrapper .btn:hover {
+        background-color: #004080;
+    }
+    .register-link {
+        text-align: center;
+        margin-top: 20px; /* Adjusted margin for spacing */
+    }
+    
+    .register-link p {
+        font-size: 16px;
+        color: #666; /* Adjusted text color */
+    }
+    
+    .register-link a {
+        color: #0066cc; /* Link color */
+        text-decoration: none;
+        transition: color 0.3s; /* Smooth color transition */
+    }
+    
+    .register-link a:hover {
+        color: #004080; /* Darker color on hover */
+    }
+    

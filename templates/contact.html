@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="/static/contact.css">
+</head>
+<body>
+    <header>
+        <h2 class="logo">ASD</h2>
+        <nav class="navigation">
+           <a href="/">Home</a>
+           <a href="{{ url_for('about') }}">About</a>
+           <a href="{{ url_for('contact') }}">Contact</a>
+
+         </nav>
+    </header>
+	
+    <section class="team">
+	
+        <div class="engineer">
+            <img src="/static/khaled.jpg" alt="Engineer 1">
+            <div class="info">
+                <h2>Khaled HENCHIR</h2>
+                <p>Infotonics Engineering Student at ENICARTHAGE</p>
+                <p>Email: <a href="khaled.henchir@enicar.ucar.tn">khaled.henchir@enicar.ucar.tn</a></p>
+                <p>Phone: +216 95879866</p>
+            </div>
+        </div>
+
+        <div class="engineer">
+            <img src="/static/firas.jpg" alt="Engineer 2">
+            <div class="info">
+                <h2>Firas FARHANI</h2>
+                <p>Infotonics Engineering Student at ENICARTHAGE</p>
+                <p>Email: <a href="firass.farhani@enicar.ucar.tn">firass.farhani@enicar.ucar.tn</a></p>
+                <p>Phone: +216 27155927</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
