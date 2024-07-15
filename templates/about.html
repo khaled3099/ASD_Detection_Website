@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">                                  
+    <title>Document</title>                                                                                 
+    <link rel="stylesheet" href="/static/about.css">                                                    
+</head>                                                                                                     
+<body>                                                                                                               
+    <header>
+        <h2 class="logo">ASD</h2>
+        <nav class="navigation">
+           <a href="/">Home</a>
+           <a href="{{ url_for('about') }}">About</a>
+           <a href="{{ url_for('contact') }}">Contact</a>
+
+         </nav>
+    </header>
+    <div class="bod">
+    <div class="heading">
+        <h1>Autism Spectrum Disorder</h1>
+        <p>Autism spectrum disorder (ASD) is a developmental disability that affects how a person interacts with the world around them. It can cause challenges in social communication, repetitive behaviors, and sensory processing.  The severity of symptoms can vary widely, and people with ASD may have exceptional skills and strengths in certain areas. There is no single cause of ASD, but it is believed to be a combination of genetic and environmental factors. There is also no cure for ASD, but there are therapies and interventions that can help people with ASD live happy and fulfilling lives</p>
+    </div>
+    <div class="container">
+        <section class="about">
+            <div class="about-image">
+                <img src="/static/kid.jpg" alt="image not found">
+            </div>
+            <div class="about-content">
+                <h2>How AI helps identify autism</h2>
+                <p>Detecting autism in children using deep learning architectures is an emerging approach that relies on feature extraction and analysis of smiles. The idea is to train a deep learning model to analyze facial expressions, particularly smiles, to identify subtle patterns that might be linked to autism. This method works by extracting key features from facial images or videos. The model then learns from these features to differentiate between smiles of children with autism and those of neurotypical children. It's important to note that this approach is still under development and shouldn't be used as a sole diagnostic tool. However, it has the potential to assist healthcare professionals in identifying children at risk for Autism Spectrum Disorder (ASD) and guide them towards proper diagnosis and support.</p>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>

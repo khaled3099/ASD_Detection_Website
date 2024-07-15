@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Display Images in Directory</title>
+<link rel="stylesheet" type="text/css" href="/static/style_2.css">
+</head>
+<body>
+    <header>
+         <h2 class="logo">AutiVision</h2>
+         <nav class="navigation">
+            <a href="/">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+
+          </nav>
+    </header>
+		<div class="container">
+			<div class="file-container">
+                <label for="directory-selector" class="custom-file-input">
+                    <i class="fas fa-cloud-upload-alt"></i> Choose Directory
+                </label>
+  <input type="file" id="directory-selector" webkitdirectory directory multiple></div>
+  
+  <button id="classify-button">Classify</button></body>
+  
+  <div style="display: flex; justify-content: center; align-items: center; height: 80vh;">
+    <div style="max-height: 400px; overflow-y: auto;"> <!-- Wrap the table inside a div with fixed height and overflow auto -->
+      <table id="main-table">
+        <thead>
+          <tr>
+            <th>Images to classify</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div> <!-- Close the div -->
+  </div> <!-- Close the outer div -->
+
+  <div id="loading-spinner" style="display: none; text-align: center;"> <!-- Loading spinner -->
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <div style="display: flex; justify-content: space-around; width: 100%;"> <!-- Flex container for "Table 1" and "Table 2" -->
+    <div style="max-height: 400px; max-width: 100px;"> <!-- Wrap Table 1 inside a div with fixed height and overflow auto -->
+      <h2>Table 1</h2>
+      <table id="table1" class="image-table">
+        <thead>
+          <tr>
+            <th>Non Autistic</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div style="max-height: 400px; max-width: 100px;"> <!-- Wrap Table 2 inside a div with fixed height and overflow auto -->
+      <h2>Table 2</h2>
+      <table id="table2" class="image-table">
+        <thead>
+          <tr>
+            <th>Autistic</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div> <!-- Close the flex container for "Table 1" and "Table 2" -->
+</div> <!-- Close the outer flex container -->
+
+
+
+  <script>
+document.getElementById('directory-selector').addEventListener('change', function(e) {
+  const files = e.target.files;
+  const tableBody = document.getElementById('main-table').getElementsByTagName('tbody')[0];
+  tableBody.innerHTML = ''; // Clear previous images
+  let row = tableBody.insertRow(); // Insert a new row for the first batch of images
+  let count = 0; // Initialize count for images in the current row
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    if (file.type.startsWith('image/')) {
+      if (count === 6) {
+        // If current row is full, insert a new row
+        row = tableBody.insertRow();
+        count = 0;
+      }
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      
+      // Create a paragraph element for image name
+      const nameParagraph = document.createElement('p');
+      nameParagraph.textContent = file.name;
+      
+      const cell = row.insertCell();
+      cell.appendChild(img);
+      cell.appendChild(nameParagraph); // Append the name paragraph
+      
+      count++;
+    }
+  }
+});
+
+
+    document.getElementById('classify-button').addEventListener('click', function() {
+      const files = document.getElementById('directory-selector').files;
+      showLoadingSpinner(); // Show loading spinner before sending images to backend
+      sendImagesToBackend(files);
+    });
+
+    function sendImagesToBackend(files) {
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append('images[]', files[i]);
+      }
+
+      // Send AJAX request to backend
+      fetch('/dashboard_2', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); // Assuming backend returns JSON
+      })
+      .then(data => {
+        // Check if class_0_images and class_1_images are present in the response data
+        if (data.hasOwnProperty('class_0_images') && data.hasOwnProperty('class_1_images')) {
+          // Display images in Table 1
+          displayImagesInTable(data.class_0_images, 'table1');
+
+          // Display images in Table 2
+          displayImagesInTable(data.class_1_images, 'table2');
+        } else {
+          console.error('Invalid response data from backend');
+        }
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      })
+      .finally(() => {
+        hideLoadingSpinner(); // Hide loading spinner after receiving response from backend
+      });
+    }
+
+    function displayImagesInTable(images, tableId) {
+    const tableBody = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+    tableBody.innerHTML = ''; // Clear previous images
+
+    let row = tableBody.insertRow();
+    let count = 0;
+
+    images.forEach(imageName => {
+      const imgSrc = '/static/uploads/' + imageName; // Adjust the path based on your folder structure
+      const imgElement = document.createElement('img');
+      imgElement.src = imgSrc;
+
+      const cell = row.insertCell();
+      cell.appendChild(imgElement);
+
+      // Create a paragraph element for image name
+      const nameParagraph = document.createElement('p');
+      nameParagraph.textContent = imageName;
+      cell.appendChild(nameParagraph);
+
+      count++;
+      if (count === 4) {
+        row = tableBody.insertRow();
+        count = 0;
+      } else {
+        // If not a full row, add a blank cell for alignment
+        const blankCell = row.insertCell();
+        blankCell.style.visibility = "hidden";
+      }
+    });
+  }
+
+  function showLoadingSpinner() {
+    document.getElementById('loading-spinner').style.display = 'block';
+  }
+
+  function hideLoadingSpinner() {
+    document.getElementById('loading-spinner').style.display = 'none';
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Path Display</title>
+    <link rel="stylesheet" href="/static/styles_1.css">
+</head>
+<body>
+    <header>
+         <h2 class="logo">AutiVision</h2>
+         <nav class="navigation">
+            <a href="/">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+
+          </nav>
+    </header>
+
+		<div class="container">
+			<div class="file-container">
+                <label for="file-input" class="custom-file-input">
+                    <i class="fas fa-cloud-upload-alt"></i> Choose Image
+                </label>
+    <input type="file" id="file-input" accept="image/*"onchange="displayFilePath()">
+    <div id="file-path"></div></div>
+			<div class="image-container" id="image-container"></div>
+			<button class="action-button" type="button" onclick="displayresult()"> Start </button></div>
+    <div class="two-cont"><h1>Result :</h1>
+    <div class="result-container" id="result-container"></div>
+    <div class="desc-container" id="desc-container"></div>
+    </div>
+    
+
+    <script>
+        document.getElementById('file-input').addEventListener('change', function(event) {
+            var input = event.target;
+            var file = input.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var imgElement = document.createElement('img');
+                imgElement.src = e.target.result;
+                var imageContainer = document.getElementById('image-container');
+                imageContainer.innerHTML = ''; // Clear previous image
+                imageContainer.appendChild(imgElement);
+            }
+            reader.readAsDataURL(file);
+        });
+
+
+        function displayresult() {
+            // Get the file input element
+            var fileInput = document.getElementById('file-input');
+
+            // Check if any file is selected
+            if (fileInput.files.length > 0) {
+                var file = fileInput.files[0];
+
+                // Check if the selected file is an image
+                if (file.type.match('image.*')) {
+                    // Create FormData object to send the file to the server
+                    var formData = new FormData();
+                    formData.append('image', file);
+
+                    // Make an AJAX request to the backend
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/dashboard', true); // Send to your Flask route
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                // If the request is successful, display the result
+                                var result = JSON.parse(xhr.responseText);
+                                var resultContainer = document.getElementById('result-container');
+                                resultContainer.innerHTML = result.result;
+								resultContainer.classList.add('stylish-text');
+                                // Display any additional message
+                                alert(result.message);
+                            } else {
+                                // If the request fails, display an error message
+                                alert('Prediction failed. Please try again.');
+                            }
+                        }
+                    };
+                    xhr.send(formData);
+                } else {
+                    // If the selected file is not an image, display an error message
+                    alert('Please select an image file.');
+                }
+            } else {
+                // If no file is selected, display an error message
+                alert('Please select an image file.');
+            }
+        }
+    </script>
+</body>
+</html>
